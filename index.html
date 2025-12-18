@@ -1,0 +1,426 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>PetCare</title>
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+<style>
+:root{
+  --brown:#5b4636;
+  --brown-dark:#3f2d22;
+  --cream:#f6f1e7;
+  --orange:#f28c28;
+  --text:#2b1d15;
+  --rosa-pet:#e84393; /* Tom de rosa adicionado */
+}
+*{margin:0; padding:0; box-sizing:border-box;}
+body{font-family:Poppins, sans-serif; background:var(--cream); color:var(--text);}
+
+/* ===== HEADER / HERO ===== */
+.hero {
+  min-height:100vh;
+  background: linear-gradient(rgba(0,0,0,.35), rgba(0,0,0,.35)),
+              url("capa-hero.png");
+  background-size: cover;
+  background-position: 85% center; /* Desktop - pet mais à direita */
+  
+  display:flex;
+  flex-direction:column;
+  position:relative;
+  overflow: hidden;
+}
+
+.hero::after{
+  content:"";
+  position:absolute;
+  bottom:0;
+  left:0;
+  width:100%;
+  height:140px;
+  background: var(--cream);
+  z-index:1;
+
+  mask-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 1440 120' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M0 40 C 120 80 240 0 360 30 C 480 60 600 20 720 40 C 840 60 960 20 1080 40 C 1200 60 1320 20 1440 40 L1440 120 L0 120 Z' fill='black'/%3E%3C/svg%3E");
+  mask-size: cover;
+  mask-repeat: no-repeat;
+
+  -webkit-mask-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 1440 120' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M0 40 C 120 80 240 0 360 30 C 480 60 600 20 720 40 C 840 60 960 20 1080 40 C 1200 60 1320 20 1440 40 L1440 120 L0 120 Z' fill='black'/%3E%3C/svg%3E");
+  -webkit-mask-size: cover;
+  -webkit-mask-repeat: no-repeat;
+}
+
+/* Para telas menores */
+@media(max-width: 1200px){
+  .hero {
+    background-position: 75% center;
+  }
+}
+
+@media(max-width: 768px){
+  .hero {
+    background-position: 65% center; /* Mobile - mais centralizado */
+    background-size: 120% auto; /* Dá um zoom para telas menores */
+  }
+}
+
+.header{
+  display:flex; justify-content:space-between; align-items:center;
+  padding:20px 40px; position:relative; z-index:100;
+}
+.header img{height:42px;}
+
+/* ===== NAVEGAÇÃO PRINCIPAL (DESKTOP) ===== */
+.nav-desktop{display:flex;}
+.nav-desktop a{
+  color:#fff; margin-left:28px; text-decoration:none; font-weight:500;
+  position:relative; transition:color .3s;
+}
+.nav-desktop a::after{
+  content:""; position:absolute; left:0; bottom:-6px; width:0;
+  height:3px; background:var(--rosa-pet); transition:width .3s; /* Alterado para rosa */
+}
+.nav-desktop a:hover{color:var(--rosa-pet);} /* Alterado para rosa */
+.nav-desktop a:hover::after{width:100%;}
+
+/* ===== BOTÃO MENU HAMBÚRGUER (MOBILE) ===== */
+.menu-toggle{
+  display: none;
+  background: none;
+  border: none;
+  cursor: pointer;
+  z-index: 1000;
+  width: 30px;
+  height: 24px;
+  position: relative;
+  padding: 0;
+}
+
+/* LINHAS DO MENU SANDUÍCHE */
+.menu-toggle span {
+  display: block;
+  position: absolute;
+  height: 3px;
+  width: 100%;
+  background: white;
+  border-radius: 3px;
+  opacity: 1;
+  left: 0;
+  transform: rotate(0deg);
+  transition: .25s ease-in-out;
+}
+
+/* Posicionamento das 3 linhas do sanduíche */
+.menu-toggle span:nth-child(1) {
+  top: 0px;
+}
+.menu-toggle span:nth-child(2) {
+  top: 10px;
+}
+.menu-toggle span:nth-child(3) {
+  top: 20px;
+}
+
+/* Animação para transformar em X */
+.menu-toggle.active span:nth-child(1) {
+  top: 10px;
+  transform: rotate(135deg);
+}
+.menu-toggle.active span:nth-child(2) {
+  opacity: 0;
+  left: -60px;
+}
+.menu-toggle.active span:nth-child(3) {
+  top: 10px;
+  transform: rotate(-135deg);
+}
+
+/* ===== MENU LATERAL (MOBILE) ===== */
+.nav-mobile {
+  position: fixed;
+  top: 0;
+  right: -300px;
+  width: 280px;
+  height: 100%;
+  background-color: var(--brown-dark);
+  box-shadow: -5px 0 15px rgba(0,0,0,0.2);
+  transition: right 0.4s cubic-bezier(0.68, -0.55, 0.27, 1.55);
+  z-index: 999;
+  padding-top: 100px;
+  display: flex;
+  flex-direction: column;
+}
+.nav-mobile.active {
+  right: 0;
+}
+.nav-mobile a {
+  color: var(--cream);
+  text-decoration: none;
+  padding: 20px 35px;
+  border-bottom: 1px solid rgba(255,255,255,0.08);
+  font-weight: 500;
+  font-size: 18px;
+  display: flex;
+  align-items: center;
+  transition: all 0.3s ease;
+  position: relative;
+}
+.nav-mobile a:hover {
+  background-color: rgba(232, 67, 147, 0.1); /* Alterado para rosa com transparência */
+  padding-left: 45px;
+  color: var(--rosa-pet); /* Alterado para rosa */
+}
+.nav-mobile a::before {
+  content: '›';
+  position: absolute;
+  left: 20px;
+  opacity: 0;
+  transition: all 0.3s ease;
+  color: var(--rosa-pet); /* Alterado para rosa */
+}
+.nav-mobile a:hover::before {
+  opacity: 1;
+  left: 25px;
+}
+
+.overlay {
+  display: none;
+  position: fixed;
+  top: 0; left: 0; right: 0; bottom: 0;
+  background-color: rgba(0,0,0,0.5);
+  z-index: 998;
+  backdrop-filter: blur(3px);
+}
+.overlay.active {display: block;}
+
+.hero-content{
+  flex:1; display:flex; align-items:center; padding:0 40px;
+  position:relative; z-index:10;
+}
+.hero-text{
+  max-width:520px; color:#fff;
+}
+.hero-text h1{font-size:48px; line-height:1.1; margin-bottom:16px;}
+.hero-text p{font-size:18px; margin-bottom:28px; opacity:.95;}
+.hero-text a{
+  background:var(--rosa-pet); /* Alterado para rosa */
+  color:#fff; 
+  padding:14px 32px;
+  border-radius:30px; 
+  text-decoration:none; 
+  font-weight:600;
+  transition:transform .3s, box-shadow .3s;
+  box-shadow:0 10px 25px rgba(0,0,0,.35);
+}
+.hero-text a:hover{
+  transform:translateY(-3px); 
+  box-shadow:0 14px 30px rgba(0,0,0,.45);
+}
+
+/* ===== SEÇÃO SERVIÇOS ===== */
+.services{padding:80px 24px; background:var(--cream);}
+.services-container{max-width:1100px; margin:0 auto; text-align:center;}
+.services h2{font-size:36px; color:var(--brown-dark); margin-bottom:10px;}
+.services p{max-width:620px; margin:0 auto 50px; color:#6b4c3b;}
+.cards{display:grid; grid-template-columns:repeat(3,1fr); gap:28px;}
+.card{
+  background:#fff; border-radius:20px; overflow:hidden;
+  box-shadow:0 14px 35px rgba(0,0,0,.08);
+  transition:transform .3s, box-shadow .3s;
+}
+.card:hover{
+  transform:translateY(-8px); box-shadow:0 20px 45px rgba(0,0,0,.12);
+}
+.card img{width:100%; height:300px; object-fit:cover;}
+.card-content{padding:22px; text-align:left;}
+.card h3{margin-bottom:8px; color:var(--brown-dark);}
+.card p{font-size:14px; color:#6b4c3b;}
+
+/* ===== FOOTER ===== */
+.footer{
+  background:#2f2118; color:#eee; padding:30px 24px; text-align:center;
+}
+.footer-container {
+  max-width:1100px; margin:0 auto;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 15px;
+}
+.footer img{
+  height:32px;
+}
+.footer .social-icons {
+  display:flex; justify-content:center; gap:20px;
+}
+.social-icons a {
+  color:#eee; font-size:24px;
+  transition:color .3s, transform .3s;
+}
+.social-icons a:hover {
+  color:var(--rosa-pet); /* Alterado para rosa */
+  transform:translateY(-3px);
+}
+.footer p{
+  font-size:13px; opacity:.8; margin: 0;
+}
+
+/* ===== RESPONSIVO ===== */
+@media(max-width: 900px){
+  .nav-desktop {display:none;}
+  .menu-toggle {display: block;}
+  .hero-text h1{font-size:36px;}
+  .cards{grid-template-columns:1fr;}
+}
+
+@media(max-width: 768px){
+  .hero {
+    background-position: 60% 40%;
+    background-size: cover;
+    background-repeat: no-repeat;
+  }
+  .hero::after {
+    height: 100px; /* Ajuste da onda para mobile */
+  }
+}
+
+/* ESTILO PARA DEBUG 
+.debug-border {
+  border: 3px solid red !important;
+}
+</style>
+</head>
+<body>
+<!-- SEÇÃO 1 -->
+<section class="hero" id="inicio">
+  <div class="overlay" id="navOverlay"></div>
+  <header class="header">
+    <img src="logo.png" alt="Logo Pet Shop">
+    <nav class="nav-desktop">
+      <a href="#inicio">Início</a>
+      <a href="#servicos">Serviços</a>
+      <a href="#contato">Contato</a>
+    </nav>
+    <button class="menu-toggle" id="menuBtn" aria-label="Abrir menu">
+      <span></span>
+      <span></span>
+      <span></span>
+    </button>
+  </header>
+  <nav class="nav-mobile" id="navMobile">
+    <a href="#inicio">Início</a>
+    <a href="#servicos">Serviços</a>
+    <a href="#contato">Contato</a>
+  </nav>
+
+  <div class="hero-content">
+    <div class="hero-text">
+      <h1>Cuidado completo para quem você mais ama</h1>
+      <p>Somos um serviço pet focado em bem-estar, segurança e carinho. Atendemos cães e gatos com profissionais experientes.</p>
+      <a href="#contato">Agende seu horário</a>
+    </div>
+  </div>
+</section>
+
+<!-- SEÇÃO 2 -->
+<section class="services" id="servicos">
+  <div class="services-container">
+    <h2>Nossos Serviços</h2>
+    <p>Atendimento humanizado e estrutura moderna para o seu pet.</p>
+    <div class="cards">
+      <div class="card">
+        <img src="banho-tosa.jpg" alt="Banho e Tosa">
+        <div class="card-content">
+          <h3>Banho & Tosa</h3>
+          <p>Higiene completa com produtos adequados para cada tipo de pelagem.</p>
+        </div>
+      </div>
+      <div class="card">
+        <img src="veterinario.jpg" alt="Veterinário">
+        <div class="card-content">
+          <h3>Veterinário</h3>
+          <p>Consultas, vacinas e acompanhamento da saúde do seu pet.</p>
+        </div>
+      </div>
+      <div class="card">
+        <img src="hotel-pet.jpg" alt="Hotel Pet">
+        <div class="card-content">
+          <h3>Hotel Pet</h3>
+          <p>Hospedagem segura e confortável enquanto você viaja.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer class="footer" id="contato">
+  <div class="footer-container">
+    <img src="logo.png" alt="Logo Pet Shop">
+    <div class="social-icons">
+      <a href="https://instagram.com" target="_blank" aria-label="Instagram">
+        <i class="fab fa-instagram"></i>
+      </a>
+      <a href="https://wa.me/5511999999999" target="_blank" aria-label="WhatsApp">
+        <i class="fab fa-whatsapp"></i>
+      </a>
+      <a href="https://maps.google.com/?q=Endereço+PetCare" target="_blank" aria-label="Localização">
+        <i class="fas fa-location-dot"></i>
+      </a>
+    </div>
+    <p>© 2025 PetCare • Todos os direitos reservados</p>
+  </div>
+</footer>
+
+<script>
+const menuBtn = document.getElementById('menuBtn');
+const navMobile = document.getElementById('navMobile');
+const navOverlay = document.getElementById('navOverlay');
+
+function toggleMenu() {
+  navMobile.classList.toggle('active');
+  navOverlay.classList.toggle('active');
+  menuBtn.classList.toggle('active');
+}
+
+// Abrir/fechar menu
+menuBtn.addEventListener('click', toggleMenu);
+navOverlay.addEventListener('click', toggleMenu);
+
+// Fechar menu ao clicar em um link
+const navLinks = document.querySelectorAll('.nav-mobile a');
+navLinks.forEach(link => {
+  link.addEventListener('click', toggleMenu);
+});
+
+// Fechar menu com tecla ESC
+document.addEventListener('keydown', function(event) {
+  if (event.key === 'Escape' && navMobile.classList.contains('active')) {
+    toggleMenu();
+  }
+});
+
+// Verificação da imagem (mantido do seu código)
+document.addEventListener('DOMContentLoaded', function() {
+  console.log("🔍 Verificando imagem capa-hero.png...");
+  
+  const testImg = new Image();
+  testImg.onload = function() {
+    console.log("✅ Imagem 'capa-hero.png' carregada com sucesso!");
+    console.log("📏 Dimensões: " + this.width + "x" + this.height);
+  };
+  
+  testImg.onerror = function() {
+    console.error("❌ ERRO: Imagem 'capa-hero.png' NÃO encontrada!");
+    console.log("📁 Verifique se o arquivo está na mesma pasta que o HTML");
+    console.log("📝 Nome exato do arquivo: capa-hero.png");
+    
+    document.querySelector('.hero').classList.add('debug-border');
+  };
+  
+  testImg.src = "capa-hero.png";
+});
+</script>
+</body>
+</html>

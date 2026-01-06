@@ -516,6 +516,35 @@ body{font-family:Poppins, sans-serif; background:var(--cream); color:var(--text)
     margin-top: 12px;
   }
 
+/* ===== AJUSTE DESKTOP — AGENDAMENTO SEM SOBREPOSIÇÃO ===== */
+@media (min-width: 901px) {
+
+  .agendamento-wrapper {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    align-items: center;
+    padding-left: calc((100vw - 1100px) / 2);
+  }
+
+  .agendamento-container {
+    position: relative;
+    margin-left: 0;           /* REMOVE INVASÃO */
+    max-width: 520px;
+  }
+
+  .agendamento-imagem {
+    position: relative;       /* REMOVE SOBREPOSIÇÃO */
+    width: 100%;
+    height: 100%;
+  }
+
+  .agendamento-imagem img {
+    transform: none;          /* IMAGEM ALINHADA */
+    max-height: 100%;
+  }
+
+}
+
 
 </style>
 

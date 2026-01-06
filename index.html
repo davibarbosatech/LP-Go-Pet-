@@ -433,7 +433,21 @@ body{font-family:Poppins, sans-serif; background:var(--cream); color:var(--text)
 
 
 /* MOBILE */
+
 @media (max-width: 900px) {
+ 
+ .agendamento-container {
+    margin-left: 0;              /* <<< CORREÇÃO */
+    left: 50%;
+    transform: translateX(-50%);
+  }
+
+}
+
+.agendamento-wrapper {
+  justify-content: center;
+}
+
   .agendamento {
     padding: 80px 16px;
     min-height: auto;
@@ -444,7 +458,11 @@ body{font-family:Poppins, sans-serif; background:var(--cream); color:var(--text)
     justify-content: center;
   }
 
+  
+
   /* IMAGEM COMO FUNDO VISUAL */
+
+  
   .agendamento-imagem {
     position: relative;
     width: 100%;
@@ -497,8 +515,6 @@ body{font-family:Poppins, sans-serif; background:var(--cream); color:var(--text)
   .form-agendamento button {
     margin-top: 12px;
   }
-}
-
 
 
 </style>
